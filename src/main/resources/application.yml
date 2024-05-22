@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: eazybank
+  profiles:
+    active: dev # configuration dev file
