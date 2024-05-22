@@ -1,8 +1,10 @@
 package co.istad.jbsdemo.eazybank.init;
 
 import co.istad.jbsdemo.eazybank.entity.Authorities;
+import co.istad.jbsdemo.eazybank.entity.Customer;
 import co.istad.jbsdemo.eazybank.entity.User;
 import co.istad.jbsdemo.eazybank.feature.authority.AuthorityRepository;
+import co.istad.jbsdemo.eazybank.feature.customer.CustomerRepository;
 import co.istad.jbsdemo.eazybank.feature.user.UserRepository;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
@@ -14,12 +16,14 @@ import org.springframework.stereotype.Component;
 public class DataInit {
     private final UserRepository userRepository;
     private final AuthorityRepository authorityRepository;
+    private final CustomerRepository customerRepository;
 
     // populate database ( role with some data )
     @PostConstruct
     void dataInit() {
         authorityInit();
         userInit();
+        customerInit();
     }
     void authorityInit() {
         if (authorityRepository.findAll().isEmpty()) {
@@ -38,6 +42,16 @@ public class DataInit {
             user.setPassword("admin");
             user.setEnabled(true);
             userRepository.save(user);
+        }
+    }
+    void customerInit() {
+        if (customerRepository.findAll().isEmpty()) {
+            // add customer
+            Customer customer = new Customer();
+            customer.setEmail("customer@gmail.com");
+            customer.setPassword("customer");
+            customer.setRole("user");
+            customerRepository.save(customer);
         }
     }
 
