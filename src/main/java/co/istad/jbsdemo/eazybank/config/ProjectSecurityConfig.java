@@ -4,10 +4,14 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+
+import javax.sql.DataSource;
 
 import static org.springframework.security.config.Customizer.withDefaults;
 
@@ -28,6 +32,12 @@ public class ProjectSecurityConfig {
                 .formLogin(withDefaults()).
                 httpBasic(withDefaults()).build();
     }
+
+    @Bean
+    public UserDetailsService userDetailsService(DataSource dataSource) {
+        return new JdbcUserDetailsManager(dataSource);
+    }
+
     //Only for testing
 //    @Bean
 //    public InMemoryUserDetailsManager userDetailsService() {
@@ -44,18 +54,20 @@ public class ProjectSecurityConfig {
 //        return new InMemoryUserDetailsManager(admin, user);
 //    }
 
-    //Using NoOpPasswordEncoder
-    @Bean
-    public InMemoryUserDetailsManager userDetailsService() {
-        InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
-        manager.createUser(User.withUsername("admin").password("admin").roles("ADMIN").build());
-        manager.createUser(User.withUsername("user").password("user").roles("USER").build());
-        return manager;
-    }
+//    //Using NoOpPasswordEncoder
+//    @Bean
+//    public InMemoryUserDetailsManager userDetailsService() {
+//        InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
+//        manager.createUser(User.withUsername("admin").password("admin").roles("ADMIN").build());
+//        manager.createUser(User.withUsername("user").password("user").roles("USER").build());
+//        return manager;
+//    }
+//
+//    @Bean
+//    public PasswordEncoder passwordEncoder() {
+//        return NoOpPasswordEncoder.getInstance();
+//    }
+//
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return NoOpPasswordEncoder.getInstance();
-    }
 
 }

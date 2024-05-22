@@ -18,8 +18,11 @@ spring:
   jpa:
     show-sql: true
     hibernate:
-      ddl-auto: update # or update
+      ddl-auto: create-drop # or update
     generate-ddl: true
+    properties:
+      hibernate:
+        format_sql: true
 springdoc:
   swagger-ui:
     path: /
