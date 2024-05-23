@@ -3,6 +3,7 @@ package co.istad.jbsdemo.eazybank.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -23,7 +24,9 @@ public class ProjectSecurityConfig {
                                         "api/v1/bank/myLoan").authenticated()
                                 .requestMatchers(
                                         "api/v1/bank/contact",
-                                        "/api/v1/bank/notice").permitAll())
+                                        "api/v1/bank/notice",
+                                        "register").permitAll())
+                .csrf(AbstractHttpConfigurer::disable)
                 .formLogin(withDefaults()).
                 httpBasic(withDefaults()).build();
     }

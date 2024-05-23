@@ -25,6 +25,7 @@ public class DataInit {
         userInit();
         customerInit();
     }
+
     void authorityInit() {
         if (authorityRepository.findAll().isEmpty()) {
             Authorities authority = new Authorities();
@@ -44,6 +45,7 @@ public class DataInit {
             userRepository.save(user);
         }
     }
+
     void customerInit() {
         if (customerRepository.findAll().isEmpty()) {
             // add customer

@@ -29,9 +29,8 @@ public class EazyBankUserDetails implements UserDetailsService {
             userName = customers.get(0).getEmail();
             password = customers.get(0).getPassword();
             authorities = new ArrayList<>();
-            authorities.add(new SimpleGrantedAuthority("ROLE_" + customers.get(0).getRole()));
+            authorities.add(new SimpleGrantedAuthority(customers.get(0).getRole()));
         }
         return new org.springframework.security.core.userdetails.User(userName, password, authorities);
-
     }
 }
